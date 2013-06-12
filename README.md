@@ -1,2 +1,2 @@
-## Audio Feed Daemon (AFD)
+## SoundNibbler
 A script to parse feeds for audio files

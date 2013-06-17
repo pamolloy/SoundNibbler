@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # PURPOSE
 #	A daemon to parse feeds for audio files and manage those files
@@ -7,6 +7,7 @@
 
 import sys
 from datetime import datetime
+import glob
 import json
 import feedparser
 
@@ -28,7 +29,7 @@ def entries_updated(feed):
 	new_entries = []
 
 	for entry in feed.entires:
-		entry_dt = datetime(entry.updated[5:-4, date_format)
+		entry_dt = datetime(entry.updated[5:-4], date_format)
 		if entry_dt > las_checked:
 			new_entries.append(entry)
 
@@ -49,6 +50,14 @@ def update_feed(feed):
 	if feed_updated(feed):
 		new_entries = entries_updated(feed)
 		audio_files = parse_entries(new_entries)
+
+def update_feeds():
+    """Update all feeds in current working directory"""
+
+    for filename in glob.glob('*.json'):
+        with open(filename, 'r') as store:
+            feed = json.load(store)
+            update_feed(feed)
 
 def add_feed(url):
 	"""Try to add the url as a feed"""
